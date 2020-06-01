@@ -1,19 +1,22 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, AsyncStorage, Image, SafeAreaView } from 'react-native';
-import { H1, H2, H3, Icon, View, Toast, Card, CardItem, Body, Text, Button, Right, Left, Badge, ListItem, List } from 'native-base';
+import { TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { H1, H2, H3, Icon, View, Toast, Card, CardItem, Body, Text, Button, Right, Left, Badge, ListItem, List, Spinner, Content } from 'native-base';
 import Carousel from 'react-native-snap-carousel';
 import ProgressCircle from 'react-native-progress-circle'
 
 //components
 import Layaout from '../components/Layaout';
 
-export default function App() {
+const _retrieveData = async () => { return await AsyncStorage.getItem('Name_profile'); };
+
+export default function App(props) {
     const navigation = useNavigation();
     const Primary = "#54D1ED";
     const [state, setState] = React.useState({
         name: "Clic me!",
-        modal: false,
+        load: false,
         saldo: 1570000,
         inversion: 1600000,
         rendimiento: -30000,
@@ -58,13 +61,12 @@ export default function App() {
         ]
     });
 
-    const _retrieveData = async () => {
-        const value = await AsyncStorage.getItem('Name_profile');
-        if (value !== null) setState({ ...state, name: value })
-    };
+
     React.useEffect(() => {
-        _retrieveData();
-    }, [])
+        _retrieveData().then((e) => {
+            if (e !== null) setState({ ...state, name: e })
+        })
+    }, [props.route.params.name])
 
     const currencyFormat = (num) => {
         return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')

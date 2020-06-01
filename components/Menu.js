@@ -25,7 +25,7 @@ export default function Menu() {
             </View> */}
             <View style={styles.submenu} >
                 {list.map((Li, index) => (
-                    <TouchableOpacity onPress={() => { navigation.push(Li.route) }} key={"touch_" + index} style={styles.button}>
+                    <TouchableOpacity onPress={() => { navigation.navigate(Li.route) }} key={"touch_" + index} style={styles.button}>
                         <Feather name={Li.icon} color={route.name === Li.route ? styles.active.color : "grey"} size={26} />
                         <Text style={route.name === Li.route ? styles.active : styles.TextButton}> {Li.name} </Text>
                     </TouchableOpacity>

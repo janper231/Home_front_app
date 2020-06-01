@@ -23,6 +23,12 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.janper231.home_front_dev",
+      "versionCode": 1
+    },
+    "description": "create app with only home and to name person to asyncstorage ",
+    "githubUrl": "https://github.com/janper231/Home_front_app"
   }
 }

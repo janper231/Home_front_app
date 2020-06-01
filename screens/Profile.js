@@ -1,25 +1,26 @@
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { Form, Item, Input, Button, Icon, Text, Card, CardItem, View, Body, Toast } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
 import Layaout from '../components/Layaout';
+
+const _retrieveData = async () => { return await AsyncStorage.getItem('Name_profile'); }
+const _setData = async (val) => { return await AsyncStorage.setItem('Name_profile', val); }
 
 const Profile = () => {
     const [name, setName] = React.useState("");
-    const _retrieveData = async () => {
-        const value = await AsyncStorage.getItem('Name_profile');
-        if (value !== null && name === "") {
-            setName(value)
-        }
-    };
+    const navigation = useNavigation();
+
     React.useEffect(() => {
-        _retrieveData();
+        let n = _retrieveData().then((value) => {
+            if (value !== null && name === "") setName(value)
+        });
     }, [])
-    const _storeData = async (value) => {
-        await AsyncStorage.setItem('Name_profile', name);
-    };
+
     const save = () => {
-        _storeData();
+        _setData(name);
         Toast.show({ text: 'Nombre guardado', buttonText: 'Ok' })
+        navigation.navigate("Home", { name: name });
     }
 
     return (
