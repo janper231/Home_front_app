@@ -61,12 +61,11 @@ export default function App(props) {
         ]
     });
 
-
     React.useEffect(() => {
         _retrieveData().then((e) => {
             if (e !== null) setState({ ...state, name: e })
         })
-    }, [props.route.params.name])
+    }, [props.route.params])
 
     const currencyFormat = (num) => {
         return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
